@@ -5,7 +5,7 @@ import pickle
 redis = Redis(host='redis', port=6379)
 
 def process(x):
- print('Processing {}...')
+ print('Processing...')
  for k, v in x.items():
   print('Key: {} | Value: {}'.format(k, str(v)))
   redis.lpush('results', pickle.dumps([k, v]))
@@ -18,7 +18,11 @@ if __name__ == '__main__':
   time.sleep(1)
   item = redis.rpop('my_list')
   if item:
-   item = pickle.loads(item)
-   process(item)
+   try:
+    item = pickle.loads(item)
+    process(item)
+   except:
+    print('-- INPUT ERROR --')
+    print('Aborting...')
    
   
