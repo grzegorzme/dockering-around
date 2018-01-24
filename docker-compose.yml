@@ -7,6 +7,10 @@ services:
    - "5050:5000"
   depends_on:
    - redis
+   - web2
+  links:
+   - web2
+   - web2:webweb2
 
  web2:
   build: "./app2"
